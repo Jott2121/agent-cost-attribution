@@ -76,6 +76,11 @@ Measurement that kills your own hypothesis is the whole point. The rest of this 
 Each practice is reported on the right axis and **never double-counted** (routing changes cost-per-token,
 not token *count*; caching is a cost-axis win; only genuine token-count reductions go on the headline).
 
+**Measured proof:** [`examples/routing-savings.md`](examples/routing-savings.md) — a live before/after
+where routing four mechanical agents to a cheap model cut run cost **76% (~$1.80 → ~$0.43)** with
+identical facts extracted, isolated by the meter to exactly the routed stage. Reproducible from
+[`examples/routing-demo.js`](examples/routing-demo.js).
+
 ## What's here
 
 ```
