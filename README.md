@@ -98,6 +98,14 @@ Anyone running agentic workflows who wants maximum capability per token — and 
 waste* instead of guessing. It's also a worked demonstration of rigorous, measured agentic-coding
 practice: measure → attribute → gate on quality → publish what you kept *and* what you killed.
 
+## About
+
+Built by **Jeff Otterson** ([Jott2121](https://github.com/Jott2121)). Part of the Fleet Mode line:
+[**bow**](https://github.com/Jott2121/bow) (the flagship agent case study) ·
+[**fleet-mode**](https://github.com/Jott2121/fleet-mode) (the orchestration doctrine as a live skill) ·
+[**agent-gate**](https://github.com/Jott2121/agent-gate) · [**rag-guard**](https://github.com/Jott2121/rag-guard)
+— the same discipline: measure it, gate it, keep the receipts.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
