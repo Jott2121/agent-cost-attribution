@@ -28,17 +28,25 @@ python3 -m agent_cost_attribution path/to/runs-dir/      # every run in a direct
 Sample output:
 
 ```
-deep-research  <run-id>  status=failed  total=1,192,692  invariant_ok=True
-  Verify           601,658   50.4%  n=75  #########################
-  Fetch            441,697   37.0%  n=24  ##################
-  Search           134,608   11.3%  n=6   ######
-  Scope             14,729    1.2%  n=1   #
-  Synthesize             0    0.0%  n=1
+deep-research  <run-id>  status=failed  total=1,192,692 tok  ~$28.62  invariant_ok=True
+  Verify           601,658   50.4%  ~$  14.44  n=75  #########################
+  Fetch            441,697   37.0%  ~$  10.60  n=24  ##################
+  Search           134,608   11.3%  ~$   3.23  n=6   ######
+  Scope             14,729    1.2%  ~$   0.35  n=1   #
+  Synthesize             0    0.0%  ~$   0.00  n=1
+  ($ = estimate: list prices, 85%-input blend; telemetry has no I/O split)
 ```
 
-`invariant_ok` means the per-agent token counts sum **exactly** to the run total — the parser is
-checking itself. A `DEGRADED` banner appears when a stage errored or ran anomalously cheap, with the
-reason; cost numbers on a degraded run are not trustworthy and shouldn't be published.
+You get three things per run: **tokens**, an estimated **dollar cost**, and a **trust check**.
+
+- **`invariant_ok`** means the per-agent token counts sum **exactly** to the run total — the parser is
+  checking itself, so you can believe the breakdown.
+- The **`~$` figures are estimates**: each agent's tokens are priced at its model's list price using a
+  documented input/output blend (the telemetry exposes only a single token count, no I/O split), so read
+  them as a calibrated band, not a billing statement. Because they're priced **per agent**, a
+  model-routing win shows up directly (route a stage to a cheaper model → its `~$` drops).
+- A **`DEGRADED`** banner appears when a stage errored or ran anomalously cheap — cost numbers on a
+  degraded run aren't trustworthy and shouldn't be published.
 
 ## The headline finding (why you should trust the method)
 

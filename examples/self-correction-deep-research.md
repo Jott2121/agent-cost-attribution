@@ -36,13 +36,19 @@ broken, and it was the cheapest, most abnormal run in the set. A discrediting ba
 **A healthy run, by contrast:**
 
 ```
-deep-research  <healthy-run>  status=failed  total=1,192,692  invariant_ok=True
-  Verify           601,658   50.4%  n=75  #########################
-  Fetch            441,697   37.0%  n=24  ##################
-  Search           134,608   11.3%  n=6   ######
-  Scope             14,729    1.2%  n=1   #
-  Synthesize             0    0.0%  n=1
+deep-research  <healthy-run>  status=failed  total=1,192,692 tok  ~$28.62  invariant_ok=True
+  Verify           601,658   50.4%  ~$  14.44  n=75  #########################
+  Fetch            441,697   37.0%  ~$  10.60  n=24  ##################
+  Search           134,608   11.3%  ~$   3.23  n=6   ######
+  Scope             14,729    1.2%  ~$   0.35  n=1   #
+  Synthesize             0    0.0%  ~$   0.00  n=1
+  ($ = estimate: list prices, 85%-input blend; telemetry has no I/O split)
 ```
+
+In dollars (list-price estimate): this single run is **~$29** — Verify ~$14, Fetch ~$11. That reframes
+the levers: routing Fetch's 442K tokens to a cheap model would cut that stage from ~$10.60 to ~$0.71,
+but the bigger prize is the **~$14 Verify stage** — and the honest fix there (gather evidence once,
+keep three independent judges) is worth more than squeezing Fetch.
 
 **Verify is the whale — not Fetch.** Across the healthy runs, Verify ran **50–74%** of total tokens
 (72–74% on the fully-completed ones) while Fetch was a stable **~19–37%**. The cause: every verifier

@@ -8,6 +8,7 @@ from pathlib import Path
 
 from agent_cost_attribution.ledger import load_run, summary
 from agent_cost_attribution.health import detect_degradation
+from agent_cost_attribution.pricing import cost_by_stage, DEFAULT_INPUT_SHARE
 
 
 def _iter_paths(args):
@@ -19,19 +20,23 @@ def _iter_paths(args):
             yield p
 
 
-def render(run):
+def render(run, *, input_share=DEFAULT_INPUT_SHARE):
     s = summary(run)
+    costs = cost_by_stage(run, input_share=input_share)
+    total_usd = sum(costs.values())
     head = (f"{s['workflow'] or '?'}  {s['run_id']}  status={s['status']}  "
-            f"total={s['total_tokens']:,}  invariant_ok={s['invariant_ok']}")
+            f"total={s['total_tokens']:,} tok  ~${total_usd:,.2f}  invariant_ok={s['invariant_ok']}")
     lines = [head]
     for stage, st in sorted(s["stages"].items(), key=lambda kv: -kv[1]["tokens"]):
         bar = "#" * int(round(st["pct"] / 2))
-        lines.append(f"  {stage:14s} {st['tokens']:>9,}  {st['pct']:5.1f}%  n={st['count']:<3d} {bar}")
+        usd = costs.get(stage, 0.0)
+        lines.append(f"  {stage:14s} {st['tokens']:>9,}  {st['pct']:5.1f}%  ~${usd:>7,.2f}  n={st['count']:<3d} {bar}")
     findings = detect_degradation(run)
     if findings:
         lines.append("  ! DEGRADED — cost numbers on this run are NOT publishable:")
         for f in findings:
             lines.append(f"      [{f['severity']}] {f['stage']}: {f['kind']} — {f['detail']}")
+    lines.append(f"  ($ = estimate: list prices, {input_share:.0%}-input blend; telemetry has no I/O split)")
     return "\n".join(lines)
 
 
