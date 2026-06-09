@@ -25,7 +25,7 @@ review) on a cheaper/faster model; reserve the strongest model for judgment, des
 fan-out, route the "doer" agents down a tier and keep the "judge"/"synthesizer" on top.
 **Savings:** ~30–80% **cost** on the routed slice · *axis: cost (not token-count)* · risk: low *if* the
 routed task is mechanical and its output is checked downstream · effort: small.
-**Concrete:** in a real measured run the page-fetch stage cost **~$10.60** on the top model; those same
+**Concrete:** in a real measured run the page-fetch stage cost **~$3.53** on the top model; those same
 tokens on a cheap model ≈ **$0.71** — the meter prices per-agent, so the routing win is visible at once.
 **Caveat:** Never route the *judge* down — a weak judge's failure mode is confidently approving wrong
 work (see C3). And confirm the runtime actually honors a per-call model override (it's observable in

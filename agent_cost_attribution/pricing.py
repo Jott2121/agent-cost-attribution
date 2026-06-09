@@ -6,13 +6,13 @@ blended rate using a configurable input-share assumption (default 0.85: agentic/
 input-dominated). Prices are public list prices and change over time; update PRICES as needed.
 """
 
-# $ per 1,000,000 tokens, as (input, output). Public list prices — update as they change.
+# $ per 1M tokens (input, output) — public list prices, verified at platform.claude.com 2026-06-09.
 PRICES = {
-    "opus":   (15.0, 75.0),
+    "opus":   (5.0, 25.0),
     "sonnet": (3.0, 15.0),
     "haiku":  (1.0, 5.0),
 }
-_UNKNOWN = PRICES["opus"]          # unknown model → priced as opus (conservative / high end)
+_UNKNOWN = PRICES["opus"]          # unknown model → priced as opus (sensible default)
 DEFAULT_INPUT_SHARE = 0.85
 
 

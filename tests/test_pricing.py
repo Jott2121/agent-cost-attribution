@@ -7,8 +7,8 @@ def test_opus_costs_more_than_haiku_for_same_tokens():
 
 
 def test_blended_rate_endpoints_match_list_prices():
-    assert abs(pricing.blended_rate("claude-opus-4-8", input_share=1.0) - 15.0 / 1_000_000) < 1e-15
-    assert abs(pricing.blended_rate("opus", input_share=0.0) - 75.0 / 1_000_000) < 1e-15
+    assert abs(pricing.blended_rate("claude-opus-4-8", input_share=1.0) - 5.0 / 1_000_000) < 1e-15
+    assert abs(pricing.blended_rate("opus", input_share=0.0) - 25.0 / 1_000_000) < 1e-15
 
 
 def test_unknown_model_priced_as_opus():
@@ -28,6 +28,6 @@ def test_cost_by_stage_reflects_per_agent_model():
 
 
 def test_opus_full_run_estimate_is_in_expected_band():
-    # 1,000,000 opus tokens at 85% input ≈ $24 (0.85*15 + 0.15*75 = 24)
+    # 1,000,000 opus tokens at 85% input ≈ $8 (0.85*5 + 0.15*25 = 8)
     est = pricing.estimate_cost(1_000_000, "claude-opus-4-8")
-    assert 23.9 < est < 24.1
+    assert 7.9 < est < 8.1

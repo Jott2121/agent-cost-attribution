@@ -28,11 +28,11 @@ python3 -m agent_cost_attribution path/to/runs-dir/      # every run in a direct
 Sample output:
 
 ```
-deep-research  <run-id>  status=failed  total=1,192,692 tok  ~$28.62  invariant_ok=True
-  Verify           601,658   50.4%  ~$  14.44  n=75  #########################
-  Fetch            441,697   37.0%  ~$  10.60  n=24  ##################
-  Search           134,608   11.3%  ~$   3.23  n=6   ######
-  Scope             14,729    1.2%  ~$   0.35  n=1   #
+deep-research  <run-id>  status=failed  total=1,192,692 tok  ~$9.54  invariant_ok=True
+  Verify           601,658   50.4%  ~$   4.81  n=75  #########################
+  Fetch            441,697   37.0%  ~$   3.53  n=24  ##################
+  Search           134,608   11.3%  ~$   1.08  n=6   ######
+  Scope             14,729    1.2%  ~$   0.12  n=1   #
   Synthesize             0    0.0%  ~$   0.00  n=1
   ($ = estimate: list prices, 85%-input blend; telemetry has no I/O split)
 ```
@@ -77,7 +77,7 @@ Each practice is reported on the right axis and **never double-counted** (routin
 not token *count*; caching is a cost-axis win; only genuine token-count reductions go on the headline).
 
 **Measured proof:** [`examples/routing-savings.md`](examples/routing-savings.md) — a live before/after
-where routing four mechanical agents to a cheap model cut run cost **76% (~$1.80 → ~$0.43)** with
+where routing four mechanical agents to a cheap model cut run cost **67% (~$0.60 → ~$0.20)** with
 identical facts extracted, isolated by the meter to exactly the routed stage. Reproducible from
 [`examples/routing-demo.js`](examples/routing-demo.js).
 

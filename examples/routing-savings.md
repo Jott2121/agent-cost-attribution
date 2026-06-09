@@ -1,7 +1,7 @@
-# Measured receipt: model-routing saved 76% cost at held capability
+# Measured receipt: model-routing saved 67% cost at held capability
 
 A live before/after of **Playbook A1 (right-size the model per task)**, measured with the meter in this
-repo. Reproducible: the workflow is [`routing-demo.js`](routing-demo.js), run twice — `{route:false}`
+repo — **67% cost reduction at held capability**. Reproducible: the workflow is [`routing-demo.js`](routing-demo.js), run twice — `{route:false}`
 (baseline) and `{route:true}` (routed).
 
 **The task (identical in both runs):** four agents each extract one fact + key number from a short,
@@ -13,35 +13,27 @@ the *synthesizer* stays on the strong model (Opus) in both.
 
 **Baseline — all agents on Opus:**
 ```
-routing-demo  status=completed  total=74,991 tok  ~$1.80  invariant_ok=True  (healthy)
-  Extract     extract:mars     claude-opus-4-8     15,173 tok  ~$0.3642
-  Extract     extract:everest  claude-opus-4-8     15,170 tok  ~$0.3641
-  Extract     extract:python   claude-opus-4-8     15,168 tok  ~$0.3640
-  Extract     extract:pacific  claude-opus-4-8     15,183 tok  ~$0.3644
-  Synthesize  synthesize       claude-opus-4-8     14,297 tok  ~$0.3431
-  STAGE Extract     ~$1.4567
-  STAGE Synthesize  ~$0.3431
+routing-demo  wf_5ba026c3-250  status=completed  total=74,991 tok  ~$0.60  invariant_ok=True
+  Extract           60,694   80.9%  ~$   0.49  n=4   ########################################
+  Synthesize        14,297   19.1%  ~$   0.11  n=1   ##########
+  ($ = estimate: list prices, 85%-input blend; telemetry has no I/O split)
 ```
 
 **Routed — extractors on Haiku, synthesizer on Opus:**
 ```
-routing-demo  status=completed  total=67,684 tok  ~$0.43  invariant_ok=True  (healthy)
-  Extract     extract:mars     claude-haiku-4-5-20251001  13,335 tok  ~$0.0213
-  Extract     extract:everest  claude-haiku-4-5-20251001  13,377 tok  ~$0.0214
-  Extract     extract:python   claude-haiku-4-5-20251001  13,333 tok  ~$0.0213
-  Extract     extract:pacific  claude-haiku-4-5-20251001  13,337 tok  ~$0.0213
-  Synthesize  synthesize       claude-opus-4-8            14,302 tok  ~$0.3432
-  STAGE Synthesize  ~$0.3432
-  STAGE Extract     ~$0.0854
+routing-demo  wf_8e2be971-29e  status=completed  total=67,684 tok  ~$0.20  invariant_ok=True
+  Extract           53,382   78.9%  ~$   0.09  n=4   #######################################
+  Synthesize        14,302   21.1%  ~$   0.11  n=1   ###########
+  ($ = estimate: list prices, 85%-input blend; telemetry has no I/O split)
 ```
 
 ## The result
 
 | | Baseline | Routed | Δ |
 |---|---|---|---|
-| **Run cost** | ~$1.80 | ~$0.43 | **−$1.37 / −76.2%** |
-| Extract stage | ~$1.4567 | ~$0.0854 | **−94% (~17× cheaper)** |
-| Synthesize stage | ~$0.3431 | ~$0.3432 | unchanged (kept on Opus) ✓ |
+| **Run cost** | ~$0.60 | ~$0.20 | **−$0.40 / −67%** |
+| Extract stage | ~$0.49 | ~$0.09 | **−82% (~5.4× cheaper)** |
+| Synthesize stage | ~$0.11 | ~$0.11 | unchanged (kept on Opus) ✓ |
 | Tokens | 74,991 | 67,684 | −9.7% |
 
 **Routing took effect** — the telemetry's per-agent `model` field flipped to Haiku for the extractors
@@ -64,7 +56,7 @@ per token on a stage whose work didn't need the strong model. And the dollars ar
 telemetry has no input/output split, so each agent's tokens are priced at its model's list rate via a
 documented 85%-input blend — exactly right for *comparing* two runs, which is the point.
 
-**The receipt:** *route mechanical sub-tasks to a cheap model → 76% lower run cost at held capability,
+**The receipt:** *route mechanical sub-tasks to a cheap model → 67% lower run cost at held capability,
 reproducible from `routing-demo.js`.* The same lever applied to the deep-research workflow's
-~$11 page-fetch stage (see [`self-correction-deep-research.md`](self-correction-deep-research.md)) is
+~$3.53 page-fetch stage (see [`self-correction-deep-research.md`](self-correction-deep-research.md)) is
 where this scales.
