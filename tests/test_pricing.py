@@ -6,6 +6,13 @@ def test_opus_costs_more_than_haiku_for_same_tokens():
            pricing.estimate_cost(1_000_000, "claude-haiku-4-5-20251001")
 
 
+def test_fable_is_the_premium_tier():
+    # Claude Fable 5 = $10/$50 — pricier than Opus 4.8 ($5/$25); blended @85% input = $16/MTok
+    assert pricing.estimate_cost(1_000_000, "claude-fable-5") > \
+           pricing.estimate_cost(1_000_000, "claude-opus-4-8")
+    assert abs(pricing.estimate_cost(1_000_000, "claude-fable-5") - 16.0) < 0.1
+
+
 def test_blended_rate_endpoints_match_list_prices():
     assert abs(pricing.blended_rate("claude-opus-4-8", input_share=1.0) - 5.0 / 1_000_000) < 1e-15
     assert abs(pricing.blended_rate("opus", input_share=0.0) - 25.0 / 1_000_000) < 1e-15
