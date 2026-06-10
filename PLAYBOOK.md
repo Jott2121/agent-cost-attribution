@@ -30,6 +30,9 @@ tokens on a cheap model ≈ **$0.71** — the meter prices per-agent, so the rou
 **Caveat:** Never route the *judge* down — a weak judge's failure mode is confidently approving wrong
 work (see C3). And confirm the runtime actually honors a per-call model override (it's observable in
 the run telemetry — the meter shows each agent's model).
+**Enforcement:** [ROUTING.md](ROUTING.md) + `agent_cost_attribution/routing.py` — a central role table
+(fail-closed roles, fail-soft overrides, tag-overridable chat escalation) so A1 is one table, not N
+string literals; includes the one-day fleet-retrofit case study and the QC bug it caught.
 
 ### A2. Fan out only for read-heavy parallel work; keep writes single-threaded
 **What:** Spawn parallel sub-agents for independent *reads* (search, audit, multi-file exploration).

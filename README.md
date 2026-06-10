@@ -81,12 +81,26 @@ where routing four mechanical agents to a cheap model cut run cost **67% (~$0.60
 identical facts extracted, isolated by the meter to exactly the routed stage. Reproducible from
 [`examples/routing-demo.js`](examples/routing-demo.js).
 
+## Making A1 stick: the routing layer ([ROUTING.md](ROUTING.md))
+
+Right-sizing the model per task fails in practice when the model is a string literal at N call
+sites — one unpinned call silently inherits your most expensive default. [ROUTING.md](ROUTING.md)
+is the case study of retrofitting a live agent fleet (11 call sites, zero routing, all premium-pinned)
+with a central role table, per-message escalation (`!tag` > imperative-only heuristic > cheap
+default), fail-soft live tuning, and an independent cross-model QC pass that caught the policy's own
+over-escalation bug before ship — audited, built, and live in one day. The reusable module is
+[`agent_cost_attribution/routing.py`](agent_cost_attribution/routing.py) (stdlib-only, like the meter):
+`Router` (fail-closed roles, fail-soft overrides), `MessageRouter` (chat escalation), and
+`savings_estimate()` (planning estimates from the meter's real volumes — labeled estimates, never
+published as measurements).
+
 ## What's here
 
 ```
 README.md      — this file
 PLAYBOOK.md    — the practices, each with what / why / how / savings / risk
-agent_cost_attribution/   — the meter (stdlib-only): ledger, health, cli
+ROUTING.md     — case study + design rules: retrofitting model routing onto a live fleet in a day
+agent_cost_attribution/   — the meter (stdlib-only): ledger, health, cli — and routing.py (A1's enforcement layer)
 tests/         — the meter's tests (the sum==total invariant is golden-tested)
 examples/      — measured worked examples
 LICENSE        — MIT
