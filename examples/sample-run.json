@@ -1,0 +1,211 @@
+{
+  "_note": "Synthetic sample telemetry for the quickstart. Not a real run; numbers are made up but format-exact.",
+  "runId": "wf_sample-001",
+  "workflowName": "sample-research",
+  "status": "completed",
+  "totalTokens": 1006200,
+  "workflowProgress": [
+    {
+      "type": "workflow_phase",
+      "phaseTitle": "Scope"
+    },
+    {
+      "type": "workflow_agent",
+      "agentId": "agent_sample-001",
+      "label": "scope-planner",
+      "phaseTitle": "Scope",
+      "model": "claude-haiku-4-5",
+      "state": "completed",
+      "tokens": 31204,
+      "toolCalls": 3
+    },
+    {
+      "type": "workflow_phase",
+      "phaseTitle": "Search"
+    },
+    {
+      "type": "workflow_agent",
+      "agentId": "agent_sample-002",
+      "label": "searcher-1",
+      "phaseTitle": "Search",
+      "model": "claude-haiku-4-5",
+      "state": "completed",
+      "tokens": 41318,
+      "toolCalls": 4
+    },
+    {
+      "type": "workflow_agent",
+      "agentId": "agent_sample-003",
+      "label": "searcher-2",
+      "phaseTitle": "Search",
+      "model": "claude-haiku-4-5",
+      "state": "completed",
+      "tokens": 38402,
+      "toolCalls": 4
+    },
+    {
+      "type": "workflow_agent",
+      "agentId": "agent_sample-004",
+      "label": "searcher-3",
+      "phaseTitle": "Search",
+      "model": "claude-haiku-4-5",
+      "state": "completed",
+      "tokens": 45991,
+      "toolCalls": 5
+    },
+    {
+      "type": "workflow_agent",
+      "agentId": "agent_sample-005",
+      "label": "searcher-4",
+      "phaseTitle": "Search",
+      "model": "claude-haiku-4-5",
+      "state": "completed",
+      "tokens": 52114,
+      "toolCalls": 5
+    },
+    {
+      "type": "workflow_agent",
+      "agentId": "agent_sample-006",
+      "label": "searcher-5",
+      "phaseTitle": "Search",
+      "model": "claude-haiku-4-5",
+      "state": "completed",
+      "tokens": 36547,
+      "toolCalls": 4
+    },
+    {
+      "type": "workflow_agent",
+      "agentId": "agent_sample-007",
+      "label": "searcher-6",
+      "phaseTitle": "Search",
+      "model": "claude-haiku-4-5",
+      "state": "completed",
+      "tokens": 39876,
+      "toolCalls": 4
+    },
+    {
+      "type": "workflow_phase",
+      "phaseTitle": "Verify"
+    },
+    {
+      "type": "workflow_agent",
+      "agentId": "agent_sample-008",
+      "label": "verifier-1",
+      "phaseTitle": "Verify",
+      "model": "claude-sonnet-4-6",
+      "state": "completed",
+      "tokens": 61882,
+      "toolCalls": 6
+    },
+    {
+      "type": "workflow_agent",
+      "agentId": "agent_sample-009",
+      "label": "verifier-2",
+      "phaseTitle": "Verify",
+      "model": "claude-sonnet-4-6",
+      "state": "completed",
+      "tokens": 58341,
+      "toolCalls": 6
+    },
+    {
+      "type": "workflow_agent",
+      "agentId": "agent_sample-010",
+      "label": "verifier-3",
+      "phaseTitle": "Verify",
+      "model": "claude-sonnet-4-6",
+      "state": "completed",
+      "tokens": 64720,
+      "toolCalls": 7
+    },
+    {
+      "type": "workflow_agent",
+      "agentId": "agent_sample-011",
+      "label": "verifier-4",
+      "phaseTitle": "Verify",
+      "model": "claude-sonnet-4-6",
+      "state": "completed",
+      "tokens": 55917,
+      "toolCalls": 6
+    },
+    {
+      "type": "workflow_agent",
+      "agentId": "agent_sample-012",
+      "label": "verifier-5",
+      "phaseTitle": "Verify",
+      "model": "claude-sonnet-4-6",
+      "state": "completed",
+      "tokens": 60238,
+      "toolCalls": 6
+    },
+    {
+      "type": "workflow_agent",
+      "agentId": "agent_sample-013",
+      "label": "verifier-6",
+      "phaseTitle": "Verify",
+      "model": "claude-sonnet-4-6",
+      "state": "completed",
+      "tokens": 57464,
+      "toolCalls": 6
+    },
+    {
+      "type": "workflow_agent",
+      "agentId": "agent_sample-014",
+      "label": "verifier-7",
+      "phaseTitle": "Verify",
+      "model": "claude-sonnet-4-6",
+      "state": "completed",
+      "tokens": 63109,
+      "toolCalls": 7
+    },
+    {
+      "type": "workflow_agent",
+      "agentId": "agent_sample-015",
+      "label": "verifier-8",
+      "phaseTitle": "Verify",
+      "model": "claude-sonnet-4-6",
+      "state": "completed",
+      "tokens": 59672,
+      "toolCalls": 6
+    },
+    {
+      "type": "workflow_agent",
+      "agentId": "agent_sample-016",
+      "label": "verifier-9",
+      "phaseTitle": "Verify",
+      "model": "claude-sonnet-4-6",
+      "state": "completed",
+      "tokens": 56830,
+      "toolCalls": 6
+    },
+    {
+      "type": "workflow_agent",
+      "agentId": "agent_sample-017",
+      "label": "verifier-10",
+      "phaseTitle": "Verify",
+      "model": "claude-sonnet-4-6",
+      "state": "completed",
+      "tokens": 62455,
+      "toolCalls": 6
+    },
+    {
+      "type": "workflow_agent",
+      "agentId": "agent_sample-018",
+      "label": "verifier-11",
+      "phaseTitle": "Verify",
+      "model": "claude-sonnet-4-6",
+      "state": "completed",
+      "tokens": 58974,
+      "toolCalls": 6
+    },
+    {
+      "type": "workflow_agent",
+      "agentId": "agent_sample-019",
+      "label": "verifier-12",
+      "phaseTitle": "Verify",
+      "model": "claude-sonnet-4-6",
+      "state": "completed",
+      "tokens": 61146,
+      "toolCalls": 6
+    }
+  ]
+}
