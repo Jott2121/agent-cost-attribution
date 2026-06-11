@@ -3,11 +3,13 @@
 [![CI](https://github.com/Jott2121/agent-cost-attribution/actions/workflows/ci.yml/badge.svg)](https://github.com/Jott2121/agent-cost-attribution/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/python-3.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue)
 
-**Get the most capability per token out of agentic coding, and prove it.**
+**Get the most capability per token out of agentic coding, and prove it. Headline result, measured by the meter in this repo: routing four mechanical agents to a cheap model cut run cost 67% (~$0.60 → ~$0.20) with identical facts extracted ([receipt](examples/routing-savings.md)).**
 
 Agentic workflows (fan-out subagents, multi-step research, tool-heavy pipelines) burn tokens fast,
 and most of the waste is invisible. You can't fix what you can't see, and the platform's own "success"
 flag is wrong more often than you'd think.
+
+> 🧩 One layer of a five-repo [**cost-governance stack**](https://github.com/Jott2121/bow#the-system-a-cost-governance-stack) for operating AI agents cost-efficiently; [bow](https://github.com/Jott2121/bow) is the flagship that runs every layer in production.
 
 This repo is two things:
 
