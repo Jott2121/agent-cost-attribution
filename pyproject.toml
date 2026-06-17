@@ -16,3 +16,8 @@ packages = ["agent_cost_attribution"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.coverage.run]
+source = ["agent_cost_attribution"]
+# relative_files lets the coverage-comment action resolve paths from a checkout
+relative_files = true

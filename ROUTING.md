@@ -79,11 +79,32 @@ invariant and a test guards it.
   from every producer it grades, the chat default is never the premium tier.
 - 330 tests green at ship, including the reviewer's probe set.
 - The decision log (kept/killed with real numbers) lives in the fleet's decision ledger.
-- **Measured before/after: pending.** The meter is pointed at the routed fleet; this
-  section gets real per-stage numbers after a full routed week, priced with the same
-  caveats as everything else in this repo (list prices, input-share blend). Planning
-  estimates are available from `routing.savings_estimate()` — clearly labeled estimates,
-  fed with real volumes from the meter's waterfall, never published as measurements.
+- **Measured before/after (first routed week, 2026-06-09 → 06-16).** What the loop
+  ledgers actually instrument is only the **weekly research deep-dive loops** — the one
+  workload the table deliberately keeps near the top (mid-premium producer + a premium
+  cross-model judge). So this is the *hardest* place to see a routing win, not the
+  easiest: the cheap-tier moves (Haiku search/extraction, standard-tier drafting and
+  sourcing) run in routines that don't write a per-call cost line anywhere I can read, so
+  I can't measure them yet and won't assert them. MEASURED, from `total_cost_usd` in the
+  loop ledgers (`state/loops/*.jsonl`, `state/ghost/loops/*.jsonl`), split at
+  2026-06-09T23:45Z:
+  - **Pre** (Jun 8–9, almost entirely the **Opus-class** era — the all-Fable swap was
+    only hours old at the fix): 11 loop runs / 21 eval iterations, **$18.50 total**,
+    **$0.88 / iteration**, **$1.68 / run**, 1.9 iterations/run.
+  - **Post** (routed: 2 deep-dive runs, Jun 10 + Jun 15): 3 eval iterations,
+    **$2.90 total**, **$0.97 / iteration**, **$1.45 / run**, 1.5 iterations/run.
+  - **Honest read:** per-iteration cost on this workload is **flat** ($0.88 → $0.97),
+    which is the *expected, designed* result — deep dive and judge were kept premium on
+    purpose. The slight drop in cost/run and iterations/run is **inside the noise** at
+    n=2 post-routing runs (the weekly routine fired ~once). The all-premium baseline was
+    also hours old, so any cross-boundary total is a strawman; do not read the $18.50 →
+    $2.90 total drop as a savings figure (different windows, different routine mix).
+  - **Verdict: too thin and too biased to publish a savings number.** The instrumented
+    sample is the premium-by-design tail, not the routed cheap path; one week gave two
+    post runs. The defensible claim stays the operational one from the top of this doc
+    (regression → shipped QC'd fix in a day). Real per-stage savings wait on a per-call
+    cost line in the cheap-tier routines. ESTIMATES (never measurements) remain available
+    from `routing.savings_estimate()`, fed with real volumes from the meter's waterfall.
 
 ## Use the module
 
