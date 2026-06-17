@@ -1,6 +1,8 @@
 # agent-cost-attribution
 
 [![CI](https://github.com/Jott2121/agent-cost-attribution/actions/workflows/ci.yml/badge.svg)](https://github.com/Jott2121/agent-cost-attribution/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/Jott2121/agent-cost-attribution/actions/workflows/codeql.yml/badge.svg)](https://github.com/Jott2121/agent-cost-attribution/actions/workflows/codeql.yml)
+[![Coverage](https://raw.githubusercontent.com/Jott2121/agent-cost-attribution/python-coverage-comment-action-data/badge.svg)](https://github.com/Jott2121/agent-cost-attribution/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/python-3.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue)
 
 **Get the most capability per token out of agentic coding, and prove it. Headline result, measured by the meter in this repo: routing four mechanical agents to a cheap model cut run cost 67% (~$0.60 → ~$0.20) with identical facts extracted ([receipt](examples/routing-savings.md)).**
@@ -141,6 +143,16 @@ LICENSE        - MIT
 Anyone running agentic workflows who wants maximum capability per token, and a way to *find their own
 waste* instead of guessing. It's also a worked demonstration of rigorous, measured agentic-coding
 practice: measure, attribute, gate on quality, publish what you kept *and* what you killed.
+
+## Reliability & security
+
+A meter people trust has to be measured itself, so the repo is gated:
+
+- **Coverage-gated test matrix** — pytest on Python 3.9–3.12, build fails below the coverage floor (currently 96% covered), plus a smoke-test of the meter on the shipped sample run.
+- **CodeQL** — `security-extended` static analysis on every push, PR, and weekly; findings surface in the Security tab.
+- **Pinned supply chain** — GitHub Actions pinned to commit SHAs, kept current by **Dependabot**.
+- **Branch protection** — `main` requires CI + CodeQL to pass before a merge.
+- **Disclosure policy** — see [SECURITY.md](SECURITY.md); private reporting is enabled.
 
 ## About
 
