@@ -159,7 +159,9 @@ A meter people trust has to be measured itself, so the repo is gated:
 Built by **Jeff Otterson** ([Jott2121](https://github.com/Jott2121)). Part of the Fleet Mode line:
 [**bow**](https://github.com/Jott2121/bow) (the flagship agent case study) ·
 [**fleet-mode**](https://github.com/Jott2121/fleet-mode) (the orchestration doctrine as a live skill) ·
-[**agent-gate**](https://github.com/Jott2121/agent-gate) · [**rag-guard**](https://github.com/Jott2121/rag-guard).
+[**agent-gate**](https://github.com/Jott2121/agent-gate) · [**rag-guard**](https://github.com/Jott2121/rag-guard) ·
+[**sabot**](https://github.com/Jott2121/sabot) (own-checks fault detection — its silent
+model-downgrade operator grew out of the degraded-run detector in this repo).
 The same discipline throughout: measure it, gate it, keep the receipts.
 
 ## License
