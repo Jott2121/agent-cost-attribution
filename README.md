@@ -9,9 +9,9 @@
 | agent\_cost\_attribution/cli.py          |       45 |        5 |     89% |20, 50-51, 55-56 |
 | agent\_cost\_attribution/health.py       |       21 |        0 |    100% |           |
 | agent\_cost\_attribution/ledger.py       |       47 |        0 |    100% |           |
-| agent\_cost\_attribution/pricing.py      |       23 |        0 |    100% |           |
+| agent\_cost\_attribution/pricing.py      |       24 |        0 |    100% |           |
 | agent\_cost\_attribution/routing.py      |       61 |        2 |     97% |     58-59 |
-| **TOTAL**                                |  **203** |    **9** | **96%** |           |
+| **TOTAL**                                |  **204** |    **9** | **96%** |           |
 
 
 ## Setup coverage badge
