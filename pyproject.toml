@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "agent-cost-attribution"
-version = "0.1.0"
+version = "0.1.1"
 description = "Per-stage token/cost attribution and silent-degradation detection for multi-agent workflow runs (stdlib-only)."
 readme = "README.md"
 requires-python = ">=3.9"
@@ -25,6 +25,11 @@ classifiers = [
     "Topic :: Software Development :: Quality Assurance",
     "Topic :: System :: Monitoring",
 ]
+
+[project.optional-dependencies]
+# trove-classifiers: the canonical classifier list, so tests/test_packaging.py can
+# reject an invented classifier here rather than at the irreversible upload.
+dev = ["pytest>=8", "pytest-cov>=5", "trove-classifiers"]
 
 [project.urls]
 Homepage = "https://github.com/Jott2121/agent-cost-attribution"

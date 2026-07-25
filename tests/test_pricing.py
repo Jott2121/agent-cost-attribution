@@ -38,3 +38,13 @@ def test_opus_full_run_estimate_is_in_expected_band():
     # 1,000,000 opus tokens at 85% input ≈ $8 (0.85*5 + 0.15*25 = 8)
     est = pricing.estimate_cost(1_000_000, "claude-opus-4-8")
     assert 7.9 < est < 8.1
+
+
+def test_tier_is_public_and_the_private_alias_still_works():
+    """crucible prices its own receipts against PRICES and needs this rule. It used
+    to import the private `_tier`; the alias stays so <=0.1.0 keeps working."""
+    assert pricing.tier("claude-sonnet-5") == "sonnet"
+    assert pricing.tier("claude-opus-5[1m]") == "opus"
+    assert pricing.tier("gpt-5.6-terra") is None
+    assert pricing.tier(None) is None
+    assert pricing._tier is pricing.tier

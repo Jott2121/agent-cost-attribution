@@ -25,7 +25,21 @@ This repo is two things:
 Everything here is **measured, not asserted**. The numbers in this repo were produced by the meter
 included here; point it at your own telemetry to do the same.
 
+## Install
+
+```bash
+pip install agent-cost-attribution
+```
+
+Stdlib-only, no dependencies. Then point it at your own telemetry:
+
+```bash
+python3 -m agent_cost_attribution your-run.json
+```
+
 ## Try it in 30 seconds (zero dependencies, sample included)
+
+The sample run lives in the repo rather than the wheel, so the demo wants a clone:
 
 ```bash
 git clone https://github.com/Jott2121/agent-cost-attribution
