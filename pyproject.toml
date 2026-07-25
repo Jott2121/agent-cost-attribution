@@ -29,7 +29,7 @@ classifiers = [
 [project.optional-dependencies]
 # trove-classifiers: the canonical classifier list, so tests/test_packaging.py can
 # reject an invented classifier here rather than at the irreversible upload.
-dev = ["pytest>=8", "pytest-cov>=5", "trove-classifiers"]
+dev = ["pytest>=8", "pytest-cov>=5", "trove-classifiers", "tomli; python_version < '3.11'"]
 
 [project.urls]
 Homepage = "https://github.com/Jott2121/agent-cost-attribution"
