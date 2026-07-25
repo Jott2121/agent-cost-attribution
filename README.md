@@ -5,7 +5,7 @@
 [![Coverage](https://raw.githubusercontent.com/Jott2121/agent-cost-attribution/python-coverage-comment-action-data/badge.svg)](https://github.com/Jott2121/agent-cost-attribution/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/python-3.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue)
 
-**Get the most capability per token out of agentic coding, and prove it. Headline result, measured by the meter in this repo: routing four mechanical agents to a cheap model cut run cost 67% (~$0.60 → ~$0.20) with identical facts extracted ([receipt](examples/routing-savings.md)).**
+**Get the most capability per token out of agentic coding, and prove it. Headline result, measured by the meter in this repo: routing four mechanical agents to a cheap model cut run cost 67% (~$0.60 → ~$0.20) with identical facts extracted ([receipt](https://github.com/Jott2121/agent-cost-attribution/blob/main/examples/routing-savings.md)).**
 
 Agentic workflows (fan-out subagents, multi-step research, tool-heavy pipelines) burn tokens fast,
 and most of the waste is invisible. You can't fix what you can't see, and the platform's own "success"
@@ -18,7 +18,7 @@ This repo is two things:
 1. **`agent_cost_attribution`**: a tiny, dependency-free **meter**. Point it at a workflow run's
    telemetry and get a per-stage token waterfall, plus a **silent-degradation check** that flags runs
    that *reported success while quietly breaking*.
-2. **[PLAYBOOK.md](PLAYBOOK.md)**: a playbook of transferable practices for cutting token burn in
+2. **[PLAYBOOK.md](https://github.com/Jott2121/agent-cost-attribution/blob/main/PLAYBOOK.md)**: a playbook of transferable practices for cutting token burn in
    agentic coding **without losing capability**, each rated by expected savings, axis (tokens vs cost
    vs latency), capability risk, and effort.
 
@@ -33,7 +33,7 @@ cd agent-cost-attribution
 python3 -m agent_cost_attribution examples/sample-run.json
 ```
 
-Output (from the synthetic sample shipped in [`examples/sample-run.json`](examples/sample-run.json)):
+Output (from the synthetic sample shipped in [`examples/sample-run.json`](https://github.com/Jott2121/agent-cost-attribution/blob/main/examples/sample-run.json)):
 
 ```
 sample-research  wf_sample-001  status=completed  total=1,006,200 tok  ~$3.92  invariant_ok=True
@@ -89,11 +89,11 @@ baseline on turned out to be a **silently broken outlier**: it reported `status=
 Along the way the meter also showed the platform's own status flag was unreliable in **both**
 directions: one run said `completed` but was broken; another said `failed` but was perfectly healthy.
 The lesson, and the reason the silent-degradation check exists: **trust per-stage health, not the
-run's self-report.** Full numbers in [`examples/self-correction-deep-research.md`](examples/self-correction-deep-research.md).
+run's self-report.** Full numbers in [`examples/self-correction-deep-research.md`](https://github.com/Jott2121/agent-cost-attribution/blob/main/examples/self-correction-deep-research.md).
 
 Measurement that kills your own hypothesis is the whole point. The rest of this repo is built on it.
 
-## The playbook (TL;DR; full version in [PLAYBOOK.md](PLAYBOOK.md))
+## The playbook (TL;DR; full version in [PLAYBOOK.md](https://github.com/Jott2121/agent-cost-attribution/blob/main/PLAYBOOK.md))
 
 - **Right-size the model per task**: mechanical sub-tasks on a cheap model, judgment/synthesis on the
   strong one. (This repo's own builder/reviewer agents ran on the cheaper tier.)
@@ -106,20 +106,20 @@ Measurement that kills your own hypothesis is the whole point. The rest of this 
 Each practice is reported on the right axis and **never double-counted** (routing changes cost-per-token,
 not token *count*; caching is a cost-axis win; only genuine token-count reductions go on the headline).
 
-**Measured proof:** [`examples/routing-savings.md`](examples/routing-savings.md), a live before/after
+**Measured proof:** [`examples/routing-savings.md`](https://github.com/Jott2121/agent-cost-attribution/blob/main/examples/routing-savings.md), a live before/after
 where routing four mechanical agents to a cheap model cut run cost **67% (~$0.60 to ~$0.20)** with
 identical facts extracted, isolated by the meter to exactly the routed stage. Reproducible from
-[`examples/routing-demo.js`](examples/routing-demo.js).
+[`examples/routing-demo.js`](https://github.com/Jott2121/agent-cost-attribution/blob/main/examples/routing-demo.js).
 
-## Making A1 stick: the routing layer ([ROUTING.md](ROUTING.md))
+## Making A1 stick: the routing layer ([ROUTING.md](https://github.com/Jott2121/agent-cost-attribution/blob/main/ROUTING.md))
 
 Right-sizing the model per task fails in practice when the model is a string literal at N call
-sites: one unpinned call silently inherits your most expensive default. [ROUTING.md](ROUTING.md)
+sites: one unpinned call silently inherits your most expensive default. [ROUTING.md](https://github.com/Jott2121/agent-cost-attribution/blob/main/ROUTING.md)
 is the case study of retrofitting a live agent fleet (11 call sites, zero routing, all premium-pinned)
 with a central role table, per-message escalation (`!tag` > imperative-only heuristic > cheap
 default), fail-soft live tuning, and an independent cross-model QC pass that caught the policy's own
 over-escalation bug before ship. Audited, built, and live in one day. The reusable module is
-[`agent_cost_attribution/routing.py`](agent_cost_attribution/routing.py) (stdlib-only, like the meter):
+[`agent_cost_attribution/routing.py`](https://github.com/Jott2121/agent-cost-attribution/blob/main/agent_cost_attribution/routing.py) (stdlib-only, like the meter):
 `Router` (fail-closed roles, fail-soft overrides), `MessageRouter` (chat escalation), and
 `savings_estimate()` (planning estimates from the meter's real volumes; labeled estimates, never
 published as measurements).
@@ -152,7 +152,7 @@ A meter people trust has to be measured itself, so the repo is gated:
 - **CodeQL** — `security-extended` static analysis on every push, PR, and weekly; findings surface in the Security tab.
 - **Pinned supply chain** — GitHub Actions pinned to commit SHAs, kept current by **Dependabot**.
 - **Branch protection** — `main` requires CI + CodeQL to pass before a merge.
-- **Disclosure policy** — see [SECURITY.md](SECURITY.md); private reporting is enabled.
+- **Disclosure policy** — see [SECURITY.md](https://github.com/Jott2121/agent-cost-attribution/blob/main/SECURITY.md); private reporting is enabled.
 
 ## About
 
@@ -166,4 +166,4 @@ The same discipline throughout: measure it, gate it, keep the receipts.
 
 ## License
 
-MIT, see [LICENSE](LICENSE).
+MIT, see [LICENSE](https://github.com/Jott2121/agent-cost-attribution/blob/main/LICENSE).
