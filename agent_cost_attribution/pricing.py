@@ -17,17 +17,30 @@ _UNKNOWN = PRICES["opus"]          # unknown model → priced as opus (sensible 
 DEFAULT_INPUT_SHARE = 0.85
 
 
-def _tier(model):
+def tier(model):
+    """The pricing tier a model name falls into, or None if it matches no tier.
+
+    Public because downstream packages price their own receipts against PRICES and
+    need the same name-to-tier rule; crucible was importing the private `_tier`
+    across the package boundary, which is a dependency this package never promised
+    to keep. Matching on substring is deliberate: model ids carry dates and suffixes
+    (`claude-sonnet-5`, `claude-opus-5[1m]`) that an equality check would miss.
+    """
     m = (model or "").lower()
-    for tier in ("fable", "opus", "sonnet", "haiku"):
-        if tier in m:
-            return tier
+    for name in ("fable", "opus", "sonnet", "haiku"):
+        if name in m:
+            return name
     return None
+
+
+# Retained so existing callers of the private name keep working. Do not remove
+# without a major bump: crucible <=0.1.0 imports this symbol directly.
+_tier = tier
 
 
 def blended_rate(model, *, input_share=DEFAULT_INPUT_SHARE):
     """Blended $ per single token for `model`, given the input-share assumption."""
-    inp, outp = PRICES.get(_tier(model), _UNKNOWN)
+    inp, outp = PRICES.get(tier(model), _UNKNOWN)
     per_mtok = input_share * inp + (1.0 - input_share) * outp
     return per_mtok / 1_000_000.0
 
