@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# beforeShellExecution guard. Reads {"command": "...", "cwd": "..."} on stdin.
+# Denies irreversible / publishing commands; asks on network fetches. Fails closed (hooks.json failClosed: true).
+# The matcher includes `git pull` and `rebase`, so `git pull --rebase` and
+# `git -c key rebase` both reach the rebase deny arm.
+# A plain `git pull` is allowed. A missing, blank, or non-string command is denied.
+# Invalid JSON still exits non-zero (fail closed). See AGENTS.md.
+set -euo pipefail
+input="$(cat)"
+cmd="$(printf '%s' "$input" | python3 -c 'import sys,json
+data=json.load(sys.stdin)
+cmd=data.get("command") if isinstance(data, dict) else None
+sys.stdout.write(cmd if isinstance(cmd, str) else "")')"
+deny() { printf '{"permission":"deny","user_message":"%s","agent_message":"%s Open a PR instead; a human will do this step."}\n' "$1" "$1"; exit 0; }
+ask()  { printf '{"permission":"ask","user_message":"%s"}\n' "$1"; exit 0; }
+if [ -z "${cmd//[[:space:]]/}" ]; then
+  deny "Shell guard blocked a missing command."
+fi
+# Flags may follow other arguments (`git push origin --force`, `git reset HEAD --hard`).
+if [[ "$cmd" == *"git push"* && ( "$cmd" == *"--force"* || "$cmd" =~ (^|[[:space:]])-f([[:space:]]|$) ) ]]; then
+  deny "Force-push blocked by repo policy."
+fi
+if [[ "$cmd" == *"reset"* && "$cmd" == *"--hard"* ]]; then
+  deny "History rewrite blocked by repo policy."
+fi
+case "$cmd" in
+  *"push --force"*|*"push -f"*|*"--force-with-lease"*) deny "Force-push blocked by repo policy." ;;
+  *"reset --hard"*|*"rebase"*)                        deny "History rewrite blocked by repo policy." ;;
+  *"git tag"*|*"twine upload"*|*"uv publish"*|*"gh release"*) deny "Releases/publishing are human-only." ;;
+  *"rm -rf /"*|*"rm -rf ~"*|*'rm -rf $HOME'*)         deny "Destructive delete blocked." ;;
+  *"curl"*"| sh"*|*"curl"*"| bash"*|*"wget"*"| sh"*)   deny "Pipe-to-shell blocked." ;;
+  *"git push"*)                                       ask  "Agent wants to push a branch. Allow?" ;;
+  *"curl"*|*"wget"*)                                  ask  "Agent wants network access: $cmd" ;;
+esac
+printf '{"permission":"allow"}\n'
