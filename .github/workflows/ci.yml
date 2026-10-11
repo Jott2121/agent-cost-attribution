@@ -79,12 +79,16 @@ jobs:
       # (README bio, AGENTS.md, .cursor/, .github/ included) and exits non-zero
       # on a hit or if it cannot run (missing/empty digest file, bad regex).
       # EMPLOYER_MARKERS is optional; the digests alone must catch the name.
-      - name: Block employer terms (hashed, whole tree)
+      - name: Block employer terms (digests only, no secret)
+        run: |
+          set -euo pipefail
+          test -s .github/blocked-terms.sha256 || { echo "::error::.github/blocked-terms.sha256 missing or empty"; exit 1; }
+          env -u EMPLOYER_MARKERS python scripts/scan_employer_terms.py || { echo "::error::employer term found or employer scan failed closed"; exit 1; }
+      - name: Block employer terms (digests + EMPLOYER_MARKERS secret, if set)
         env:
           EMPLOYER_MARKERS: ${{ secrets.EMPLOYER_MARKERS }}
         run: |
           set -euo pipefail
-          test -s .github/blocked-terms.sha256 || { echo "::error::.github/blocked-terms.sha256 missing or empty"; exit 1; }
           python scripts/scan_employer_terms.py || { echo "::error::employer term found or employer scan failed closed"; exit 1; }
       # Export-control markers. Exclusions are only the policy files that have
       # to name the markers in order to forbid them. Do not exclude README to
