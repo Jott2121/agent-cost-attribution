@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # beforeShellExecution guard. Reads {"command": "...", "cwd": "..."} on stdin.
 # Denies irreversible / publishing commands; asks on network fetches. Fails closed (hooks.json failClosed: true).
-# The matcher includes `git pull`, so `git pull --rebase` reaches the rebase deny arm.
+# The matcher includes `git pull` and `rebase`, so `git pull --rebase` and
+# `git -c key rebase` both reach the rebase deny arm.
 # A plain `git pull` is allowed. A missing, blank, or non-string command is denied.
 # Invalid JSON still exits non-zero (fail closed). See AGENTS.md.
 set -euo pipefail

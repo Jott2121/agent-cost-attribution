@@ -9,5 +9,5 @@ alwaysApply: false
 - PR body sections (required): What · Why · How verified (exact commands + trimmed output) · Numbers changed (before → after + command) · Risks · Not done / follow-ups · Plan link (`.cursor/plans/...`) · Agent run link if any.
 - Attach artifacts for anything visual or behavioral (screenshot, short video, eval table).
 - Never force-push shared branches, rewrite history, tag, or publish. A human merges.
-- The shell guard denies any command whose text contains `rebase`, including `git pull --rebase`. A plain `git pull` is allowed. Do not weaken `.cursor/hooks/guard-shell.sh` or drop `git pull` from the hook matcher to get a rebase through.
+- The shell guard denies any command whose text contains `rebase`, including `git pull --rebase` and `git -C dir rebase`. The matcher must keep both `git pull` and `rebase`. A plain `git pull` is allowed. Do not weaken `.cursor/hooks/guard-shell.sh` to get a rebase through.
 - Address every Bugbot / Security Review finding: fix it or reply with a reason. Don't silently resolve.
