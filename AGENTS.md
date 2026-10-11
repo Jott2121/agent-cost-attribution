@@ -71,7 +71,7 @@ scripts/check_receipts.py  offline recompute of the headline dollars and the REA
 
 ## Known traps
 
-- **The shell guard blocks `git pull --rebase`.** The hook matcher is `rebase` (not only `git rebase`), so `git pull --rebase` invokes `.cursor/hooks/guard-shell.sh`, and that script denies any command whose text contains `rebase`. `git rebase` is denied the same way. The guard also denies force-push, `reset --hard`, `git tag`, `twine upload`, `uv publish`, `gh release`, and pipe-to-shell. `git push` and `curl`/`wget` ask instead of running. Do not loosen the guard to finish a task.
+- **The shell guard blocks `git pull --rebase`.** The hook matcher includes `git pull` and `git rebase`, so a rebasing pull reaches `.cursor/hooks/guard-shell.sh` and is denied because the command contains `rebase`. A plain `git pull` is allowed. A missing, blank, or non-string `command` is denied; invalid JSON exits non-zero (fail closed). Force-push is denied even when the flag is not adjacent to `push` (`git push origin --force`, `git push -f`), and so is a hard reset (`git reset HEAD --hard`). The guard also denies `git tag`, `twine upload`, `uv publish`, `gh release`, and pipe-to-shell. A non-force `git push`, and `curl`/`wget`, ask instead of running. Do not loosen the guard to finish a task.
 - `~$` figures are estimates. Do not treat them as an invoice, and do not "correct" a published estimate because a newer list price would change it. Update `PRICES` only in a PR that shows before → after.
 - `examples/sample-run.json` is synthetic and labeled as such. Don't cite it as a research result.
 - `routing.savings_estimate()` is a planning estimate. Never publish it as a measurement.

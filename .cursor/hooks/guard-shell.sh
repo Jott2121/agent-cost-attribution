@@ -1,12 +1,27 @@
 #!/usr/bin/env bash
 # beforeShellExecution guard. Reads {"command": "...", "cwd": "..."} on stdin.
 # Denies irreversible / publishing commands; asks on network fetches. Fails closed (hooks.json failClosed: true).
-# The rebase pattern also matches `git pull --rebase`. That is intentional; see AGENTS.md.
+# The matcher includes `git pull`, so `git pull --rebase` reaches the rebase deny arm.
+# A plain `git pull` is allowed. A missing, blank, or non-string command is denied.
+# Invalid JSON still exits non-zero (fail closed). See AGENTS.md.
 set -euo pipefail
 input="$(cat)"
-cmd="$(printf '%s' "$input" | python3 -c 'import sys,json; print(json.load(sys.stdin).get("command",""))')"
+cmd="$(printf '%s' "$input" | python3 -c 'import sys,json
+data=json.load(sys.stdin)
+cmd=data.get("command") if isinstance(data, dict) else None
+sys.stdout.write(cmd if isinstance(cmd, str) else "")')"
 deny() { printf '{"permission":"deny","user_message":"%s","agent_message":"%s Open a PR instead; a human will do this step."}\n' "$1" "$1"; exit 0; }
 ask()  { printf '{"permission":"ask","user_message":"%s"}\n' "$1"; exit 0; }
+if [ -z "${cmd//[[:space:]]/}" ]; then
+  deny "Shell guard blocked a missing command."
+fi
+# Flags may follow other arguments (`git push origin --force`, `git reset HEAD --hard`).
+if [[ "$cmd" == *"git push"* && ( "$cmd" == *"--force"* || "$cmd" =~ (^|[[:space:]])-f([[:space:]]|$) ) ]]; then
+  deny "Force-push blocked by repo policy."
+fi
+if [[ "$cmd" == *"reset"* && "$cmd" == *"--hard"* ]]; then
+  deny "History rewrite blocked by repo policy."
+fi
 case "$cmd" in
   *"push --force"*|*"push -f"*|*"--force-with-lease"*) deny "Force-push blocked by repo policy." ;;
   *"reset --hard"*|*"rebase"*)                        deny "History rewrite blocked by repo policy." ;;
