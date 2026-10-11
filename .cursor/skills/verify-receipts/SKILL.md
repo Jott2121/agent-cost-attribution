@@ -22,7 +22,7 @@ There is no ruff or mypy config. Do not invent a lint gate. Capture exit codes, 
 
 3. `git diff origin/main -- README.md examples/ PLAYBOOK.md ROUTING.md` — list every number that changed. For each, name the command that produces it and re-run it. If you can't reproduce it, mark it UNVERIFIED and stop; do not open the PR as ready.
 
-4. Grep the diff for employer-data and secret patterns (see `.cursor/rules/40-security-and-data.mdc`). Any new hit is a stop. This repo's author bio does not name an employer, and CI scans the README on purpose.
+4. Run `python scripts/scan_employer_terms.py` (must exit 0; 1 is a hit, 2 means it could not scan) and grep the diff for secret and export-control patterns (see `.cursor/rules/40-security-and-data.mdc`). Any new hit is a stop. This repo's author bio does not name an employer, and CI scans the README on purpose.
 
 5. Confirm no thresholds were lowered (`--cov-fail-under=90` stays 90) and no tests were skipped, xfailed, or removed.
 
