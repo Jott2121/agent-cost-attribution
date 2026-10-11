@@ -67,22 +67,40 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
-      # The author bio (README "About": Jeff Otterson / Jott2121) does not name
-      # an employer, so README stays in the scan. Exclusions are only the policy
-      # files that have to name the markers in order to forbid them. Do not
-      # exclude README to silence a hit.
-      - name: Block employer / export-control markers and committed build junk
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.12"
+      - name: Scanner self-test (planted term caught, clean tree passes)
+        run: |
+          python -m pip install pytest
+          python -m pytest -v tests/test_employer_scan.py
+      # Blocked employer terms exist only as SHA-256 digests in
+      # .github/blocked-terms.sha256. The scan covers every tracked file
+      # (README bio, AGENTS.md, .cursor/, .github/ included) and exits non-zero
+      # on a hit or if it cannot run (missing/empty digest file, bad regex).
+      # EMPLOYER_MARKERS is optional; the digests alone must catch the name.
+      - name: Block employer terms (hashed, whole tree)
+        env:
+          EMPLOYER_MARKERS: ${{ secrets.EMPLOYER_MARKERS }}
+        run: |
+          set -euo pipefail
+          test -s .github/blocked-terms.sha256 || { echo "::error::.github/blocked-terms.sha256 missing or empty"; exit 1; }
+          python scripts/scan_employer_terms.py || { echo "::error::employer term found or employer scan failed closed"; exit 1; }
+      # Export-control markers. Exclusions are only the policy files that have
+      # to name the markers in order to forbid them. Do not exclude README to
+      # silence a hit.
+      - name: Block export-control markers and committed build junk
         run: |
           set -euo pipefail
           set +e
-          git grep -nIiE 'lockheed|\blmco\b|\bCUI\b|ITAR|EXPORT CONTROLLED|PROPRIETARY' -- . ':!.cursor' ':!AGENTS.md' ':!.github'
+          git grep -nIiE '\bCUI\b|ITAR|EXPORT CONTROLLED|PROPRIETARY' -- . ':!.cursor' ':!AGENTS.md' ':!.github'
           status=$?
           set -e
           if [ "$status" -eq 0 ]; then
-            echo "::error::employer or export-control marker found (author bio is not an exclusion)"
+            echo "::error::export-control marker found (author bio is not an exclusion)"
             exit 1
           elif [ "$status" -ne 1 ]; then
-            echo "::error::employer scan failed closed (git grep exit ${status})"
+            echo "::error::export-control scan failed closed (git grep exit ${status})"
             exit 1
           fi
           if git ls-files | grep -E '(__pycache__/|\.pyc$|^\.coverage$)'; then

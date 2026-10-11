@@ -1,0 +1,8 @@
+# SHA-256 of lowercased blocked employer terms (one hex digest per line).
+# Read by scripts/scan_employer_terms.py. Single words and two-word phrases
+# (joined by one space, or with no separator) are hashed and compared.
+# Missing, empty, or malformed => the scan fails closed.
+cb5c36fe59056a6a1afb4b133d30981f672257d6c372bace38798b504fc0c6f2
+c376013522845bfce25461e2335a75a6808fd9365beba1c8ad75200ff2488ea3
+f277af9c64194778d745db1e6f142c724110717970ed251b4611f28e683957ae
+8c6a10a10f5de2282f957c71717b5a15ab371af5bd781b4d38e72f556964da06
