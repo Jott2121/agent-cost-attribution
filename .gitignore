@@ -13,3 +13,6 @@ htmlcov/
 dist/
 build/
 uv.lock
+
+# local Cursor hook receipts (warnings + session jsonl)
+.cursor/hook-logs/

@@ -1,0 +1,16 @@
+---
+description: Use when writing or changing README numbers, eval/benchmark code, experiment results, writeups, PR descriptions with metrics, or build-in-public post drafts
+globs: "README.md,examples/**,PLAYBOOK.md,ROUTING.md,docs/**,eval/**,runs/**,reports/**,papers/**,WRITEUP.md,CHANGELOG.md"
+alwaysApply: false
+---
+# Benchmarks and public claims
+
+- Pre-register before comparing: hypothesis, metric, n, decision rule → `docs/PREREG.md`, committed before the run.
+- Every published number links to: the command, the commit SHA, the raw artifact, and the date. If the raw artifact is not in the repo, mark the number UNVERIFIED instead of inventing one.
+- The headline 67% (~$0.60 → ~$0.20) stays as published. Re-derive the dollars with `python scripts/check_receipts.py`. Do not edit `examples/routing-savings.md` to make the arithmetic easier.
+- Include the baseline and the null. If a result is not significant, say so in the headline, not a footnote.
+- State limits up front (n, single run per cell, prompt shape, model versions, cost). Dollars here are 85%-input blend estimates.
+- Don't round in your favor. Show CIs or ranges where you have them.
+- Never edit raw run outputs. Supersede with a new run and a note.
+- If a README number changes, the PR must show before → after and the command that produced it.
+- Cross-check numbers that appear in more than one place (repo README, profile README, LinkedIn, posts) and fix drift in the same PR.
